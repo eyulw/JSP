@@ -1,0 +1,1 @@
+grant connect , resource to minha;
