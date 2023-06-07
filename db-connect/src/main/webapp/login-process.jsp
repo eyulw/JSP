@@ -44,9 +44,10 @@
 		// sendRedirect는 페이지 자체가 바뀜
 		//response.sendRedirect("login-ok.jsp?userId="+userId);
 		//직접 주소창을 바꾸는 거
-		pageContext.setAttribute("pageUserId",userId); //값 안넘어감
-		request.setAttribute("userId",userId); //값
-		session.setAttribute("userId", userId);
+ 		//pageContext.setAttribute("pageUserId",userId); //값 안넘어감
+		//request.setAttribute("userId",userId); //값
+		session.setAttribute("loggedUserId", userId);
+		session.setAttribute("loggedUserName", userName);
 		//페이지는 안바뀌는데(login-process) 내용은 login-ok.jsp
 		request.getRequestDispatcher("login-ok.jsp").forward(request,response);
 	}else{
