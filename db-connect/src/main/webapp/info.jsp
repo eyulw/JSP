@@ -19,7 +19,7 @@
 	PreparedStatement pstmt= null;
 	ResultSet rs =null;
 	
-	String sql = "select id,name,address,lpad(zonecode,5,'0') as changeZonecode ,detailaddress from member where id=?";
+	String sql = "select id,name,email,address,lpad(zonecode,5,'0') as changeZonecode ,detailaddress from member where id=?";
 	
 	Class.forName(driver);
 	conn = DriverManager.getConnection(url, id, pw);
@@ -31,11 +31,13 @@
 	String detailAddress = null;
 	String zonecode = null;
 	String name = null;
+	String email=null;
 	
 	if(rs.next()){
 		address = rs.getString("address");
 		detailAddress = rs.getString("detailAddress");
 		zonecode = rs.getString("changeZonecode");
+		email=rs.getString("email");
 		name = rs.getString("name");
 	}
 	if(detailAddress==null) detailAddress = "상세주소 없음";
@@ -53,6 +55,10 @@
         <td><%=name %></td>
       </tr>
       <tr>
+        <th scope="row">Email</th>
+        <td><%=email %></td>
+      </tr>
+      <tr>
         <th scope="row">주소</th>
         <td><%=address%> / <%= detailAddress %></td>
       </tr>
@@ -64,6 +70,7 @@
   </table>
     <div class="mt-5">
     <a href="modify.jsp" class="btn btn-info">회원 정보 수정</a>
+    <a href="modify-password.jsp" class="btn btn-info">비밀번호 변경</a>
     <a href="delete.jsp" class="btn btn-danger">회원 탈퇴</a>
   </div>
 </div>

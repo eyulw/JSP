@@ -33,6 +33,6 @@
 		session.invalidate();
 		response.sendRedirect("login-form.jsp");
 	}else{
-		out.println("<script>alert('서버오류입니다.'); history.back();</script>");
+		out.println("<script>alert('서버오류입니다.');</script>");
 	}
 %>

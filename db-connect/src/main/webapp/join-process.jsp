@@ -8,9 +8,10 @@
 	request.setCharacterEncoding("utf-8");
 	String pUserId = request.getParameter("userId");
 	String pUserName = request.getParameter("userName");
+	String pUserEmail = request.getParameter("userEmail");
 	String pUserPw = request.getParameter("userPw");
 	int pZonecode=Integer.parseInt(request.getParameter("zonecode"));
- 	String pUserAddress = request.getParameter("userAddress");
+	String pUserAddress = request.getParameter("userAddress");
 	String pUserDetailAddress = request.getParameter("datailAddress");
 	String pUserExtraAddress = request.getParameter("extraAddress");
 	
@@ -23,7 +24,7 @@
 	PreparedStatement pstmt= null;
 	ResultSet rs =null;
 	
-	String sql = "insert into member values(?,?,?,?,?,?,?)";
+	String sql = "insert into member values(?,?,?,?,?,?,?,?)";
 	
 	Class.forName(driver);
 	conn = DriverManager.getConnection(url,id,pw);	//manager가 연결해줘야함
@@ -31,10 +32,11 @@
 	pstmt.setString(1,pUserId);
 	pstmt.setString(2,pUserName);
 	pstmt.setString(3,pUserPw);
-	pstmt.setInt(4,pZonecode);
-	pstmt.setString(5,pUserAddress);
-	pstmt.setString(6,pUserDetailAddress);
-	pstmt.setString(7,pUserExtraAddress);
+	pstmt.setString(4,pUserEmail);
+	pstmt.setInt(5,pZonecode);
+	pstmt.setString(6,pUserAddress);
+	pstmt.setString(7,pUserDetailAddress);
+	pstmt.setString(8,pUserExtraAddress);
 	
 	/* select를 제외한 모든건(insert update delete) executeUpdate()이고 결과값은 int형 */
 	int result = pstmt.executeUpdate();
