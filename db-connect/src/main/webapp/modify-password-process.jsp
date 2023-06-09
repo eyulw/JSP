@@ -1,3 +1,4 @@
+<%@page import="com.minha.utils.ScriptWriter"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
@@ -5,7 +6,41 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+	/* 앞에서 기존비밀번호 쓰는 곳에서 원래거랑 맞는지 확인을 안했기 때문에 sql에서 비밀번호도 같이 확인해줘야함  */
 	request.setCharacterEncoding("utf-8");
+	String pLoggedUserId =(String)session.getAttribute("loggedUserId");
+	String pUserPw=request.getParameter("userPw");
+	String pNewUserPw=request.getParameter("newUserPw");
+	
+	String driver = "oracle.jdbc.OracleDriver";
+	String url="jdbc:oracle:thin:@localhost:1521:xe";
+	String id="minha";
+	String pw = "1234";
+	
+	Connection conn = null;
+	PreparedStatement pstmt= null;
+	
+	String sql = "update member set password = ? where id = ? and password = ?";
+	
+	Class.forName(driver);
+	conn = DriverManager.getConnection(url,id,pw);
+	pstmt=conn.prepareStatement(sql);
+	pstmt.setString(1,pNewUserPw);
+	pstmt.setString(2,pLoggedUserId);
+	pstmt.setString(3,pUserPw);
+	
+	int result = pstmt.executeUpdate();
+	if(result > 0){
+		session.invalidate();
+		/* 알림창 띄우고 페이지 넘기고싶으면 location.href로 이동하기 */
+		/* out.println("<script>alert('비밀번호가 변경되었습니다. 다시 로그인 해주세요'); location.href='login-form.jsp';</script>"); */
+		ScriptWriter.alertAndNext(response, "비밀번호가 변경되었습니다. 다시 로그인 해주세요", "login-form.jsp");
+	}else{
+/* 		out.println("<script>alert('비밀번호가 맞지 않습니다.'); history.back();</script>"); */
+		ScriptWriter.alertAndBack(response, "비밀번호가 맞지 않습니다.");
+	}
+
+	/* request.setCharacterEncoding("utf-8");
 	String pLoggedUserId=(String)session.getAttribute("loggedUserId");
 	String pNewPw = request.getParameter("newUserPw");
 		
@@ -32,6 +67,6 @@
 		response.sendRedirect("login-form.jsp");
 	}else{
 		out.println("<script>alert('서버오류입니다.'); history.back();</script>");
-	}
+	} */
 	
 %>

@@ -25,7 +25,28 @@
 </form>
 <script>
   const pwForm = document.forms.pwForm;
-  btnSubmit.addEventListener("click", (e) => {
+  document btnSubmit = document.querySelector('#btnSubmit');
+  btnSubmit.addEventListener("click",(e)=>{
+	  if(pwForm.elements.userPw.value.trim()===""){
+		  e.preventDefault();
+		  alert("비밀번호를 입력해주세요");
+		  pwForm.elements.userPw.focus();
+	  }else if(pwForm.elements.newUserPw.value.trim()===""){
+		  e.preventDefault();
+		  alert("새 비밀번호를 입력해주세요");
+		  pwForm.elements.newUserPw.focus();
+	  }else if (pwForm.elements.newUserPw.value != pwForm.elements.newUserPw02.value) {
+	      e.preventDefault();
+	      alert("비밀번호가 맞지않습니다.");
+	      pwForm.elements.newUserPw02.focus();
+	  }else if (pwForm.elements.userPw.value === pwForm.elements.newUserPw.value) {
+	      e.preventDefault();
+	      alert("기존 비밀번호와 같습니다.");
+	      pwForm.elements.newUserPw.focus();
+	  } 
+  })
+/*   const pwForm = document.forms[0];  배열로 떨어져서 하나밖에 없으니까 [0]으로 접근할수있음*/
+/*   btnSubmit.addEventListener("click", (e) => {
 	if (pwForm.elements.userPw.value.trim() === "") {
       e.preventDefault();
       alert("비밀번호를 입력하세요.");
@@ -44,7 +65,7 @@
       alert("새 비밀번호가 맞지않습니다.");
       pwForm.elements.newUserPw02.focus();
     }
-  });
+  }); */
 
 </script>
 <%@ include file="include/footer.jsp" %>
