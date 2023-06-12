@@ -52,8 +52,8 @@
   const btnIdCheck = document.querySelector("#btnIdCheck");
   const userId = document.querySelector(".userId");
   const btnSubmit = document.querySelector("#btnSubmit");
-  //let isDoubleCheck = false;
-  let isDoubleCheck = true;
+  let isDoubleCheck = false;
+
   // form들 찾아감 배열리턴.
   // form name값으로 접근
   const joinForm = document.forms.joinForm;
@@ -100,7 +100,7 @@
     }
   });
   btnIdCheck.addEventListener("click", () => {
-    fetch("idCheck.jsp?userId=" + userId.value)
+    fetch("../member/idCheck?userId=" + userId.value)
       .then((response) => {
         return response.json();
       })

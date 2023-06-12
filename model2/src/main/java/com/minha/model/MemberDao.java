@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class MemberDao {
 	private String driver = "oracle.jdbc.OracleDriver";
@@ -61,7 +62,7 @@ public class MemberDao {
 	public MemberDto loginMember(MemberDto memberDto) {
 		MemberDto loggedMemberDto=null;
 		getConnection();
-		String sql="select * from member where id=? and password=?";
+		String sql="select id,name from member where id=? and password=?";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, memberDto.getId());
@@ -78,5 +79,49 @@ public class MemberDao {
 			close();
 		}
 		return loggedMemberDto;
+	}
+
+	public int idCheck(String userId) {
+		int result=0;
+		getConnection();
+		String sql = "select count(*) as count from member where id = ?";
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt("count");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return result;
+	}
+
+	public MemberDto getMemberInfo(String userId) {
+		MemberDto memberInfoDto=null;
+		getConnection();
+		String sql="select * from member where id=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				memberInfoDto = new MemberDto();
+				memberInfoDto.setId(rs.getString("id"));
+				memberInfoDto.setName(rs.getString("name"));
+				memberInfoDto.setEmail(rs.getString("email"));
+				memberInfoDto.setAddress(rs.getString("address"));
+				memberInfoDto.setDetailaddress(rs.getString("detailaddress"));
+				memberInfoDto.setZonecode(rs.getInt("zonecode"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return memberInfoDto;
 	}
 }

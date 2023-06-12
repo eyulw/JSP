@@ -45,3 +45,7 @@ create table board(
     regdate     date default sysdate,
     hit         number
 );
+
+insert into board values(seq_board.nextval,'±è¹ÎÇÏ','Á¦¸ñÀ» ¾¹´Ï´Ù','³»¿ëÀÌ µé¾î°©´Ï´Ù',sysdate,0);
+
+select * from board;
