@@ -115,6 +115,7 @@ public class MemberDao {
 				memberInfoDto.setEmail(rs.getString("email"));
 				memberInfoDto.setAddress(rs.getString("address"));
 				memberInfoDto.setDetailaddress(rs.getString("detailaddress"));
+				memberInfoDto.setExtraaddress(rs.getString("extraaddress"));
 				memberInfoDto.setZonecode(rs.getInt("zonecode"));
 			}
 		} catch (Exception e) {
@@ -123,5 +124,63 @@ public class MemberDao {
 			close();
 		}
 		return memberInfoDto;
+	}
+	
+	public int modifyMember(MemberDto memberDto) {	
+		int result=0;
+		getConnection();
+		String sql = "update member set name=?,zonecode=?,address=?, detailAddress=?,extraAddress=? where id=? and password = ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberDto.getName());
+			pstmt.setInt(2, memberDto.getZonecode());
+			pstmt.setString(3, memberDto.getAddress());
+			pstmt.setString(4, memberDto.getDetailaddress());
+			pstmt.setString(5, memberDto.getExtraaddress());
+			pstmt.setString(6, memberDto.getId());
+			pstmt.setString(7, memberDto.getPassword());
+			result=pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return result;
+	}
+	
+	public int modifyPassword(PasswordDto passwordDto) {	
+		int result=0;
+		getConnection();
+		String sql = "update member set password=? where id=? and password = ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, passwordDto.getNewUserPw());
+			pstmt.setString(2, passwordDto.getUserId());
+			pstmt.setString(3, passwordDto.getUserPw());
+			result=pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return result;
+	}
+
+	public int deleteMember(MemberDto memberDto) {
+		int result=0;
+		getConnection();
+		String sql = "delete from member where id=? and password=?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberDto.getId());
+			pstmt.setString(2, memberDto.getPassword());
+			result=pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return result;
 	}
 }

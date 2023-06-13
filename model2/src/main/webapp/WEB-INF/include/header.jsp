@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<!-- ~core에 핵심기능이 많고 core라서 접두어로 c를 주로 사용 -->
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
@@ -17,27 +17,7 @@
           <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
             MINHA
           </a>
-          	<!-- el :expression language ==> ${loggedMemberId} : 세션지정한거 바로 접근가능 -->
-<%--           	${loggedMemberName} --%>
           <ul class="nav nav-pills">
-          <%-- 
-          <!-- c:set 은 변수지정하는거 -->
-          	<c:set var = "name" value= "홍길동"/>
-          	<!-- test는 if문의 조건식 -->
-            <c:if test="${name eq '김민하'}">
-            <c:if test="${loggedMember == null}">
-            <c:if test="${empty loggedMember}">
-            <li class="nav-item"><a href="login-form.jsp" class="nav-link">login</a></li>
-            <li class="nav-item"><a href="join-form.jsp" class="nav-link">join</a></li>
-            </c:if>
-            <c:if test="${loggedMember != null}">
-            <!-- not empty는 null 체크가 안됨 -->
-            <c:if test="${not empty loggedMember}">
-            <li class="nav-item"><a href="logout.jsp" class="nav-link">logout</a></li>
-            <li class="nav-item"><a href="info.jsp" class="nav-link">${loggedMemberName}</a></li>
-            </c:if>
-             --%>
-      		<!-- 같다 다르다따질땐 eq / ne (not equal) -->
             <c:choose>
             	<c:when test="${loggedMember eq null}">
             		<li class="nav-item"><a href="../member/login" class="nav-link">login</a></li>
