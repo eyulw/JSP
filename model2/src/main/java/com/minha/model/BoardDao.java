@@ -98,10 +98,10 @@ public class BoardDao {
 	}
 	
 	public BoardDto getView(int id) {
+		updateHit(id);
 		BoardDto boardDto = null;
 		getConnection();
 		String sql = "select * from board where id = ?";
-		updateHit(id);
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1,id);

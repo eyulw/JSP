@@ -1,6 +1,11 @@
 package com.minha.controller.member;
 
 import java.io.IOException;
+
+import com.minha.model.MemberDao;
+import com.minha.model.MemberDto;
+import com.minha.utils.ScriptWriter;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -8,9 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import com.minha.model.MemberDao;
-import com.minha.model.MemberDto;
-import com.minha.utils.ScriptWriter;
+
 
 @WebServlet("/member/deleteProcess")
 public class DeleteMemberProcessController extends HttpServlet {

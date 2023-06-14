@@ -13,6 +13,7 @@ import com.minha.model.MemberDao;
 import com.minha.model.MemberDto;
 import com.minha.utils.ScriptWriter;
 
+
 @WebServlet("/member/loginProcess")
 public class LoginProcessController extends HttpServlet {
 	private static final long serialVersionUID = 1L;

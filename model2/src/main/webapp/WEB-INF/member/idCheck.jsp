@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="application/json; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="jakarta.tags.core" prefix="c"%>
 	<c:choose>
 		<c:when test="${count gt 0}">
 			<c:set var="isState" value="false" />
