@@ -3,7 +3,9 @@ package com.minha.utils;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
+
+
 
 public class ScriptWriter {
 	//클래스 생성하지않고 바로 사용하기위해 static함수로 설정	

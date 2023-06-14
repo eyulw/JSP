@@ -1,8 +1,8 @@
 drop table member;
 
-
+    --제약조건 primary key -> unique not null
 create table member(
-    id              varchar2(100)   primary key,    --제약조건 primary key -> unique not null
+    id              varchar2(100)   primary key,
     name            varchar2(100)   not null,
     password        varchar2(100)   not null,
     email           varchar2(100)   not null,
@@ -38,14 +38,27 @@ select id,name,address,lpad(zonecode,5,'0'),detailaddress from member;
 
 --auto increment : 자동증가 mysql에는 있는데 oracle에는 없음
 create table board(
-    id          number primary key,
+    id          number primary key,     --글의 고유번호
+    userId      varchar2(100) not null,     --member id를 통한 조회
     name        varchar2(100) not null,
     title       varchar2(300) not null,
     contents    varchar2(3000) not null,
     regdate     date default sysdate,
-    hit         number
+    hit         number,
+    constraint fk_userid foreign key(userId) references member(id)
+    --constraint (내가 정하는 fk이름) foreign key(현재 테이블 컬럼명) references 다른테이블명(다른테이블컬럼명)
 );
 
-insert into board values(seq_board.nextval,'김민하','제목을 씁니다','내용이 들어갑니다',sysdate,0);
+insert into board values(seq_board.nextval,'minha','김민하','제목을 씁니다','내용이 들어갑니다',sysdate,0);
+
+drop table board;
 
 select * from board;
+
+delete from board where id=4;
+
+update board set hit = hit + 1 where id = ?;
+
+rollback;
+
+commit;

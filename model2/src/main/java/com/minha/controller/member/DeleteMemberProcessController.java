@@ -1,12 +1,12 @@
-package com.minha.controller;
+package com.minha.controller.member;
 
 import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import com.minha.model.MemberDao;
 import com.minha.model.MemberDto;
@@ -21,18 +21,20 @@ public class DeleteMemberProcessController extends HttpServlet {
     }
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String userId = request.getParameter("userId");
+		String userPw = request.getParameter("userPw");
 		MemberDao memberDao = new MemberDao();
 		MemberDto memberDto = new MemberDto();
-		memberDto.setId(request.getParameter("userId"));
-		memberDto.setPassword(request.getParameter("userPw"));
+		memberDto.setId(userId);
+		memberDto.setPassword(userPw);
 		
 		int result = memberDao.deleteMember(memberDto);
 		if(result > 0) {
 			HttpSession session = request.getSession();
 			session.invalidate();
-			ScriptWriter.alertAndNext(response,"탈퇴완료", "../member/login");
+			ScriptWriter.alertAndNext(response,"탈퇴완료", "../index/index");
 		}else {
-			ScriptWriter.alertAndBack(response, "알 수 없는 오류 발생");
+			ScriptWriter.alertAndBack(response, "비밀번호를 확인해 주세요");
 		}
 	}
 

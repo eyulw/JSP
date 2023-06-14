@@ -1,22 +1,22 @@
-package com.minha.controller;
+package com.minha.controller.member;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import com.minha.model.MemberDao;
 import com.minha.model.MemberDto;
 
-@WebServlet("/member/modify")
-public class ModifyController extends HttpServlet {
+@WebServlet("/member/info")
+public class InfoController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public ModifyController() {
+    public InfoController() {
         super();
     }
 
@@ -25,12 +25,18 @@ public class ModifyController extends HttpServlet {
 		MemberDao memberDao = new MemberDao();
 		MemberDto memberInfoDto = memberDao.getMemberInfo(userId);
 		request.setAttribute("memberInfoDto",memberInfoDto);
+
+		String detailAddress = memberInfoDto.getDetailaddress();
+		if(detailAddress == null ) {
+			detailAddress="상세주소 없음";
+		}
+		request.setAttribute("detailAddress",detailAddress);
 		String zonecode = Integer.toString(memberInfoDto.getZonecode());
 		if(zonecode.length()==4) {
 			zonecode="0"+zonecode;
 		}
 		request.setAttribute("zonecode",zonecode);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/member/modify.jsp");
+		RequestDispatcher dispatcher=request.getRequestDispatcher("/WEB-INF/member/info.jsp");
 		dispatcher.forward(request, response);
 	}
 

@@ -5,8 +5,6 @@
   <div class="container-sm">
     <div class="row justify-content-center">
       <div class="col-6">
-        
-        
         <div class="mb-5">
           <label for="floatingName">Name</label>
           <input type="text" name="userName" class="form-control" id="floatingName" placeholder="이름" />

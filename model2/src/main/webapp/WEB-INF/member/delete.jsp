@@ -4,11 +4,10 @@
     <div class="container-sm">
       <div class="row justify-content-center">
         <div class="col-6">
-          <div class="form-floating mb-3">
-            <input type="text" name="userId" class="form-control" id="floatingInput" placeholder="아이디를 입력해 주세요" 
+        	<div>
+            <input type="hidden" name="userId" class="form-control" id="floatingInput" placeholder="아이디를 입력해 주세요" 
             value="${loggedMember.id}" readonly/>
-            <label for="floatingInput">ID</label>
-          </div>
+            </div>
           <div class="form-floating mb-5">
             <input type="password" name="userPw" class="form-control" id="floatingPassword" placeholder="Password" />
             <label for="floatingPassword">Password</label>
