@@ -55,9 +55,16 @@ drop table board;
 
 select * from board;
 
+select * from board where id <=94 and id>84 order by id desc;
+
 delete from board where id=4;
 
 update board set hit = hit + 1 where id = ?;
+
+--¼­ºêÄõ¸®
+select * from (select rownum as no, b.* from (select * from board order by id desc) b) where no >=1 and no <=10;
+
+select count(*) from board;
 
 rollback;
 

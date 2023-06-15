@@ -56,12 +56,16 @@ public class BoardDao {
 		return result;
 	}
 
-	public ArrayList<BoardDto> getList() {
+	public ArrayList<BoardDto> getList(int start, int end) {
 		ArrayList<BoardDto> boardList = null;
 		getConnection();
-		String sql = "select * from board";
+		String sql = "select * from"
+		+"(select rownum as no, b.* from "
+		+"(select * from board order by id desc) b) where no >=? and no <=?";
 		try {
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
 			rs = pstmt.executeQuery();
 			boardList=new ArrayList<>();
 			while(rs.next()) {
@@ -98,7 +102,8 @@ public class BoardDao {
 	}
 	
 	public BoardDto getView(int id) {
-		updateHit(id);
+//		close()함수 쓰기때문에 getConnection보다 위에 있어야 함.
+		updateHit(id);	
 		BoardDto boardDto = null;
 		getConnection();
 		String sql = "select * from board where id = ?";
@@ -122,5 +127,59 @@ public class BoardDao {
 			close();
 		}
 		return boardDto;
+	}
+
+	public int deleteBoard(int id) {
+		int result = 0;
+		getConnection();
+		String sql = "delete from board where id=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1,id);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return result;
+	}
+
+	public int modifyBoard(BoardDto boardDto) {
+		int result = 0;
+		getConnection();
+		String sql = "update board set title=?, name=?, contents=? where id=? and userId = ?";
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, boardDto.getTitle());
+			pstmt.setString(2, boardDto.getName());
+			pstmt.setString(3, boardDto.getContents());
+			pstmt.setInt(4, boardDto.getId());
+			pstmt.setString(5, boardDto.getUserId());
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return result;
+	}
+
+	public double getTotal() {
+		double total=0;
+		getConnection();
+		String sql = "select count(*) as total from board";
+		try {
+			pstmt=conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				total=rs.getInt("total");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close();
+		}
+		return total;
 	}
 }

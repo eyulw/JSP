@@ -9,9 +9,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import com.minha.model.MemberDao;
-import com.minha.model.MemberDto;
-
 @WebServlet("/member/modifyPassword")
 public class ModifyPasswordController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
