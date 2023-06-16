@@ -32,12 +32,21 @@ public class WriteProcessController extends HttpServlet {
 		boardDto.setName(userName);
 		boardDto.setTitle(title);
 		boardDto.setContents(contents);
+		
+//		for(int i = 71; i<200; i++) {
+//			boardDto.setName(userName+"_"+i);
+//			boardDto.setTitle(title+"_"+i);
+//			boardDto.setContents(contents+"_"+i);
+//			boardDao.writeBoard(boardDto);
+//		}
+		
 		int result = boardDao.writeBoard(boardDto);
 		if(result > 0) {
 			response.sendRedirect("../board/list");
 		}else {
 			ScriptWriter.alertAndBack(response,"알 수 없는 오류 발생");
 		}
+		
 	}
 
 }

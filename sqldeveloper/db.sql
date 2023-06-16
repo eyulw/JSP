@@ -42,7 +42,7 @@ create table board(
     userId      varchar2(100) not null,     --member id를 통한 조회
     name        varchar2(100) not null,
     title       varchar2(300) not null,
-    contents    varchar2(3000) not null,
+    contents    clob not null,
     regdate     date default sysdate,
     hit         number,
     constraint fk_userid foreign key(userId) references member(id)
@@ -55,16 +55,18 @@ drop table board;
 
 select * from board;
 
-select * from board where id <=94 and id>84 order by id desc;
+select * from board order by id desc;
 
-delete from board where id=4;
 
 update board set hit = hit + 1 where id = ?;
 
 --서브쿼리
 select * from (select rownum as no, b.* from (select * from board order by id desc) b) where no >=1 and no <=10;
 
+select rownum as no,board.* from board order by id desc ;
+
 select count(*) from board;
+
 
 rollback;
 

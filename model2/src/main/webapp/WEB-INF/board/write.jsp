@@ -22,5 +22,12 @@
           <a href="../board/list" class="btn btn-primary btn-lg">LIST</a>
         </div>
 	</form>
+	<script>
+      $("#contents").summernote({
+        //placeholder: 'Hello Bootstrap 5',
+        tabsize: 2,
+        height: 100
+      });
+    </script>
 	</div>
 <%@ include file="../include/footer.jsp"%>

@@ -20,11 +20,11 @@
 		    </tr>
 		  </thead>
 		  <tbody>
-		  <c:forEach items="${boardList}" var="boardDto">
+		  <c:forEach items="${boardList}" var="boardDto" varStatus="status">
 		    <tr>
-		      <td>${boardDto.id}</td>
+		      <td>${pageDto.total - pageDto.pagePerList*(clickPage-1)-status.index}</td>
 		      <!-- query parameter get방식 -->
-		      <td><a href="../board/view?id=${boardDto.id}">${boardDto.title}</a></td>
+		      <td><a href="../board/view?id=${boardDto.id}&clickPage=${clickPage}">${boardDto.title}</a></td>
 		      <td>${boardDto.name}</td>
 		      <td>${boardDto.regdate}</td>
 		      <td>${boardDto.hit}</td>
@@ -34,21 +34,35 @@
 		</table>
 		<nav aria-label="Page navigation example">
 		  <ul class="pagination justify-content-center">
+		  <li class="page-item">
+		      <a class="page-link" href="../board/list?clickPage=1" aria-label="Previous">
+		        <span aria-hidden="true">처음</span>
+		      </a>
+		  </li>
+		  <c:if test="${pageDto.pageStart ne 1}">
 		    <li class="page-item">
-		      <a class="page-link" href="#" aria-label="Previous">
+		      <a class="page-link" href="../board/list?clickPage=${pageDto.pageStart-pageDto.pageBlock+(pageDto.pageBlock-1)}" aria-label="Previous">
 		        <span aria-hidden="true">&laquo;</span>
 		      </a>
 		    </li>
+		  </c:if>
 		    <!--for(int i=1;i<=pageTotal; i++)  -->
-		    <c:forEach begin="1" end="${pageTotal}" step="1" var="page">
-		    <li class="page-item ${page==param.clickPage? 'active':'' }">
-		    <a class="page-link" href="../board/list?start=${(page-1)*10+1}&end=${page*10}&clickPage=${page}">${page}</a></li>
+		    <c:forEach begin="${pageDto.pageStart}" end="${pageDto.pageEnd}" step="1" var="page">
+		    <li class="page-item ${page==clickPage? 'active':'' }">
+		    <a class="page-link" href="../board/list?clickPage=${page}">${page}</a></li>
 		    </c:forEach>
+		    <c:if test="${pageDto.pageEnd ne pageDto.pageTotal}">
+			    <li class="page-item">
+			      <a class="page-link" href="../board/list?clickPage=${pageDto.pageStart+pageDto.pageBlock}" aria-label="Next">
+			        <span aria-hidden="true">&raquo;</span>
+			      </a>
+			    </li>
+		    </c:if>
 		    <li class="page-item">
-		      <a class="page-link" href="#" aria-label="Next">
-		        <span aria-hidden="true">&raquo;</span>
+		      <a class="page-link" href="../board/list?clickPage=${pageDto.pageTotal}" aria-label="Previous">
+		        <span aria-hidden="true">마지막</span>
 		      </a>
-		    </li>
+		  	</li>
 		  </ul>
 		</nav>
 		<div class="mt-5">

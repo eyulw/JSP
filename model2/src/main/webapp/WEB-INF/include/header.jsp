@@ -7,8 +7,12 @@
     <meta charset="UTF-8" />
     <title>Insert title here</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link href="../summernote/summernote-lite.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/layout.css">
+    
+    <script src="../js/jquery-3.7.0.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="../summernote/summernote-lite.js"></script>
     <!-- 주소api -->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   </head>
