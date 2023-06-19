@@ -57,13 +57,14 @@ select * from board;
 
 select * from board order by id desc;
 
+delete from board;
 
 update board set hit = hit + 1 where id = ?;
 
 --¼­ºêÄõ¸®
 select * from (select rownum as no, b.* from (select * from board order by id desc) b) where no >=1 and no <=10;
 
-select rownum as no,board.* from board order by id desc ;
+select * from (select rownum as no,board.* from board order by id desc) where no >=1 and no <=10;
 
 select count(*) from board;
 
