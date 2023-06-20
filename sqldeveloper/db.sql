@@ -18,6 +18,9 @@ insert into member values('hong','홍길동','5678');
 
 commit;
 
+alter table member add profile varchar2(100);
+alter table member add realprofile varchar2(100);
+
 delete from member where id = 'minha' and password='1234';
 -- 이전 commit 상태로 넘어감
 rollback;
@@ -70,5 +73,36 @@ select count(*) from board;
 
 
 rollback;
+
+commit;
+
+create table replyBoard(
+    id          number primary key,     --댓글의 고유번호
+    userId      varchar2(100) not null,     --member id를 통한 조회
+    name        varchar2(100) not null,
+    title       varchar2(300) not null,
+    contents    clob not null,
+    regdate     date default sysdate,
+    hit         number,
+    regroup       number not null,
+    relevel       number not null,
+    restep        number not null,
+    available     number(1) default 1,
+    constraint fk02_userid foreign key(userId) references member(id)
+    --constraint (내가 정하는 fk이름) foreign key(현재 테이블 컬럼명) references 다른테이블명(다른테이블컬럼명)
+);
+
+--null 출력하고싶지않으면 nvl(,) 앞에있는게 null이면 0을 넣어라
+select nvl(max(regroup),0) as regroupmax from replyboard;
+
+select * from replyboard;
+
+rollback;
+-- 원글에 대한 댓글을 쓸 때 내가 가진 regroup안의 relevel은 1 증가시킨다.
+update replyboard set relevel = relevel +1 where regroup = 1 and relevel >0;
+
+select rownum as no, b.* from (select * from replyboard order by regroup desc,relevel asc) b;
+
+delete from replyboard;
 
 commit;
