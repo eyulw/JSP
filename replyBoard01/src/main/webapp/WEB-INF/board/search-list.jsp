@@ -20,7 +20,7 @@
 		    </tr>
 		  </thead>
 		  <tbody>
-		  <c:forEach items="${boardList}" var="boardDto" varStatus="status">
+		  <c:forEach items="${searchList}" var="boardDto" varStatus="status">
 		    <tr>
 		      <td>${pageDto.total - pageDto.pagePerList*(clickPage-1)-status.index}</td>
 		      <!-- query parameter get방식 -->
@@ -40,7 +40,7 @@
 		    </tr>
 		  </c:forEach>
 		  </tbody>
-		</table>
+		</table> 
 		<nav aria-label="Page navigation example">
 		  <ul class="pagination justify-content-center">
 		  <li class="page-item">
@@ -74,6 +74,7 @@
 		  	</li>
 		  </ul>
 		</nav>
+		
 		<div class="mt-5">
 			<a href="../board/write" class="btn btn-primary">WRITE</a>
 		</div>

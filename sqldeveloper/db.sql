@@ -92,6 +92,9 @@ create table replyBoard(
     --constraint (내가 정하는 fk이름) foreign key(현재 테이블 컬럼명) references 다른테이블명(다른테이블컬럼명)
 );
 
+drop table replyBoard;
+
+--nvl,max 오라클 내장 함수 다른데 있을수도있고 없을수도있다.
 --null 출력하고싶지않으면 nvl(,) 앞에있는게 null이면 0을 넣어라
 select nvl(max(regroup),0) as regroupmax from replyboard;
 
@@ -103,6 +106,16 @@ update replyboard set relevel = relevel +1 where regroup = 1 and relevel >0;
 
 select rownum as no, b.* from (select * from replyboard order by regroup desc,relevel asc) b;
 
+-- like %글% : ~글~ 들어가는거 다 찾기 like 글 : 글만 들어가는거 찾기 
+select * from replyboard where contents like '%글%';
+
+select * from replyboard;
+
 delete from replyboard;
+
+
+select * from (select rownum as no, b.* from (
+    	select * from replyboard where name like '%인%' order by regroup desc,relevel asc
+    ) b) where no >= 1 and no <= 10;
 
 commit;
